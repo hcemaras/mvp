@@ -4,6 +4,6 @@
 /.vagrant/
 /backend/chart.json
 /backend/config.php
-/node_modules
-/scripts
-/styles
+/node_modules/
+/scripts/
+/styles/
