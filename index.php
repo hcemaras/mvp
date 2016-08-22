@@ -1,19 +1,8 @@
 <?php
     $page['title'] = 'Purchase elementary OS';
 
-    $page['script-plugins'] = array(
-        'scripts/jQuery.leanModal2.js',
-        'scripts/slider.js'
-    );
-
     $page['scripts'] = array(
-        'https://checkout.stripe.com/checkout.js' => array(
-            'data-alipay' => 'auto',
-            'data-locale' => 'auto'
-        ),
-        'scripts/homepage.js' => array(
-            'async' => false
-        )
+        'scripts/homepage.js'
     );
 
     $page['styles'] = array(

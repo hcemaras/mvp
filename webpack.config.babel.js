@@ -8,12 +8,45 @@ import Extract from 'extract-text-webpack-plugin'
 import path from 'path'
 import webpack from 'webpack'
 
+const styleFiles = [
+    'brand',
+    'capnet-assist',
+    'developer',
+    'docs',
+    'get-involved',
+    'home',
+    'main',
+    'open-source',
+    'solarized_dark_bash',
+    'solarized_dark',
+    'solarized_light',
+    'support',
+    'team'
+]
+
+const scriptFiles = [
+    'docs/installation',
+    'docs/main',
+    'developer',
+    'external-links',
+    'get-involved',
+    'highlight.pack',
+    'homepage',
+    'jQuery.leanModal2',
+    'popover',
+    'smooth-scrolling',
+    'twitter-links'
+]
+
+const browserSupport = [
+    'last 2 version',
+    'not ie <= 11'
+]
+
 const styles = {
     name: 'styles',
     target: 'web',
-    entry: {
-        'main': path.resolve(__dirname, '_styles', 'main.css')
-    },
+    entry: {},
     output: {
         filename: '[name].css',
         path: path.resolve(__dirname, 'styles'),
@@ -22,19 +55,13 @@ const styles = {
     module: {
         loaders: [{
             test: /\.css$/,
-            loader: Extract.extract('style', 'css!postcss')
-        }, {
-            test: /\.(eot|svg|ttf|woff|woff2)$/,
-            loader: 'file?name=/fonts/[name].[ext]'
+            loader: Extract.extract('raw!postcss')
         }]
     },
     postcss: {
         plugins: [
             cssnext({
-                browsers: [
-                    'last 2 version',
-                    'not ie <= 11'
-                ]
+                browsers: browserSupport
             })
         ]
     },
@@ -46,13 +73,12 @@ const styles = {
 const scripts = {
     name: 'scripts',
     target: 'web',
-    entry: {
-        'homepage': path.resolve(__dirname, '_scripts', 'homepage.js')
-    },
+    entry: {},
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, 'scripts'),
-        publicPath: '/scripts'
+        publicPath: '/scripts',
+        libraryTarget: 'var'
     },
     resolve: {
         extensions: ['', '.js']
@@ -60,24 +86,9 @@ const scripts = {
     module: {
         loaders: [{
             test: /\.js$/,
-            loader: 'babel'
-        }, {
-            test: /\.css$/,
-            loader: 'style!css!postcss'
-        }, {
-            test: /\.(eot|svg|ttf|woff|woff2)$/,
-            loader: 'file?name=/fonts/[name].[ext]'
+            loader: 'babel',
+            exclude: /node_modules/
         }]
-    },
-    postcss: {
-        plugins: [
-            cssnext({
-                browsers: [
-                    'last 2 version',
-                    'not ie <= 11'
-                ]
-            })
-        ]
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({
@@ -98,5 +109,13 @@ const scripts = {
         })
     ]
 }
+
+styleFiles.forEach((name) => {
+    styles.entry[name] = path.resolve(__dirname, '_styles', `${name}.css`)
+})
+
+scriptFiles.forEach((name) => {
+    scripts.entry[name] = path.resolve(__dirname, '_scripts', `${name}.js`)
+})
 
 export default [styles, scripts]

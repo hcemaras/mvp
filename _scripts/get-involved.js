@@ -1,8 +1,15 @@
-/* global Chart */
+/**
+ * _scripts/get-involved.js
+ * Sets up the get-involved chart
+ */
 
-$(function () {
-    var dateYearMonthDay = new Date().toISOString().substring(0, 10)
-    var preventingCacheSuffix = '?' + dateYearMonthDay
+import $ from 'jquery'
+import Chart from 'chart.js'
+
+var dateYearMonthDay = new Date().toISOString().substring(0, 10)
+var preventingCacheSuffix = '?' + dateYearMonthDay
+
+$(document).ready(() => {
     $.ajax({
         url: 'backend/chart.json' + preventingCacheSuffix,
         dataType: 'json'

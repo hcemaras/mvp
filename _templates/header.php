@@ -97,27 +97,15 @@ $l10n->begin_html_translation();
         </script>
         <?php } ?>
 
-        <script>
-            <?php include __DIR__.'/../scripts/jql.min.js'; ?>
-            jQl.loadjQ('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js')
-            <?php foreach ($page['script-plugins'] as $script) { ?>
-            jQl.loadjQdep("<?php echo $script ?>")
-            <?php } ?>
-            jQl.boot()
-        </script>
-
+        <script src="scripts/main.js" async></script>
         <script src="scripts/popover.js" async></script>
         <script src="scripts/smooth-scrolling.js" async></script>
         <script src="scripts/twitter-links.js" async></script>
         <script src="scripts/external-links.js" async></script>
         <?php
-            // loads all async javascript tags here
             foreach ($page['scripts'] as $one => $two) {
                 $src = (!is_string($one)) ? $two : $one;
                 $atr = (is_array($two)) ? $two : array();
-
-                if (!isset($atr['async'])) $atr['async'] = true;
-                if (!$atr['async']) continue;
 
                 $atr_string = "";
                 foreach ($atr as $name => $setting) {
